@@ -1,4 +1,4 @@
-package com.food.journal.model;
+package com.food.journal.daily.plan.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,6 +17,7 @@ public class Ingredient {
     private double quantity;
 
     @Column(name = "unit", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Unit unit;
 
     @Column(name = "name", nullable = false)

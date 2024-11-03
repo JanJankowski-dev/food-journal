@@ -1,4 +1,4 @@
-package com.food.journal.model;
+package com.food.journal.daily.plan.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

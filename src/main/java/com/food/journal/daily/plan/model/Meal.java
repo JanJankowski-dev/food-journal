@@ -1,8 +1,9 @@
-package com.food.journal.model;
+package com.food.journal.daily.plan.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,9 @@ public class Meal {
 
     @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "time", nullable = false)
+    private LocalTime time;
 
     @Column(name = "name", nullable = false)
     private String name;
