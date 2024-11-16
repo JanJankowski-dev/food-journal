@@ -3,25 +3,28 @@ package com.food.journal.daily.plan.api;
 import com.food.journal.daily.plan.service.DailyPlanService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/food")
+@RequestMapping("/api/daily-plan")
 @AllArgsConstructor
-public class FoodController {
+public class DailyPlanController {
 
     private final DailyPlanService dailyPlanService;
-    @GetMapping()
+    @GetMapping(path = "food-map")
     public String getFoodMap(JwtAuthenticationToken token) {
         return "food-map";
     }
 
-    @GetMapping(path = "daily-plan")
+    @GetMapping("daily-plan")
     public DailyPlanDto getDailyPlan(){
         return dailyPlanService.getPlan(LocalDate.now());
+    }
+
+    @PostMapping(path = "{id}/meal")
+    public void addMeal(@PathVariable Integer id, @RequestBody MealDto mealDto){
+        dailyPlanService.addMeal(id, mealDto);
     }
 }
