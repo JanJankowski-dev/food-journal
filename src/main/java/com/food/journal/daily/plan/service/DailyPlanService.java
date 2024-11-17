@@ -5,7 +5,7 @@ import com.food.journal.daily.plan.api.DailyPlanDto;
 import com.food.journal.daily.plan.api.IngredientDto;
 import com.food.journal.daily.plan.api.MealDto;
 import com.food.journal.daily.plan.model.DailyPlan;
-import com.food.journal.daily.plan.model.Ingredient;
+import com.food.journal.daily.plan.model.MealIngredient;
 import com.food.journal.daily.plan.model.Meal;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,12 +39,12 @@ public class DailyPlanService {
                 it.getDescription(),
                 it.getTime(),
                 it.getName(),
-                getIngredientsDto(it.getIngredients())
+                getIngredientsDto(it.getMealIngredients())
         );
     }
 
-    private List<IngredientDto> getIngredientsDto(List<Ingredient> ingredients) {
-        return ingredients.stream()
+    private List<IngredientDto> getIngredientsDto(List<MealIngredient> mealIngredients) {
+        return mealIngredients.stream()
                 .map(it -> new IngredientDto(
                         it.getId(),
                         it.getQuantity(),
@@ -71,25 +71,25 @@ public class DailyPlanService {
         meal.setDailyPlan(dailyPlan);
 
         if (mealDto.ingredients() != null) {
-            List<Ingredient> ingredients = mealDto.ingredients().stream()
+            List<MealIngredient> mealIngredients = mealDto.ingredients().stream()
                     .map(this::mapToEntity)
                     .collect(Collectors.toList());
-            meal.setIngredients(ingredients);
-            for (Ingredient ingredient : ingredients) {
-                ingredient.setMeal(meal);
+            meal.setMealIngredients(mealIngredients);
+            for (MealIngredient mealIngredient : mealIngredients) {
+                mealIngredient.setMeal(meal);
             }
         }
         return meal;
     }
 
-    public Ingredient mapToEntity(IngredientDto ingredientDto) {
+    public MealIngredient mapToEntity(IngredientDto ingredientDto) {
         if (ingredientDto == null) {
             return null;
         }
-        Ingredient ingredient = new Ingredient();
-        ingredient.setQuantity(ingredientDto.quantity());
-        ingredient.setUnit(ingredientDto.unit());
-        ingredient.setName(ingredientDto.name());
-        return ingredient;
+        MealIngredient mealIngredient = new MealIngredient();
+        mealIngredient.setQuantity(ingredientDto.quantity());
+        mealIngredient.setUnit(ingredientDto.unit());
+        mealIngredient.setName(ingredientDto.name());
+        return mealIngredient;
     }
 }

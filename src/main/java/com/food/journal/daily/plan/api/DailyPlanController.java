@@ -18,9 +18,9 @@ public class DailyPlanController {
         return "food-map";
     }
 
-    @GetMapping("daily-plan")
-    public DailyPlanDto getDailyPlan(){
-        return dailyPlanService.getPlan(LocalDate.now());
+    @GetMapping("{date}")
+    public DailyPlanDto getDailyPlan(@PathVariable LocalDate date){
+        return dailyPlanService.getPlan(date);
     }
 
     @PostMapping(path = "{id}/meal")

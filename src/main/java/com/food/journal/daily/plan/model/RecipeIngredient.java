@@ -7,8 +7,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "ingredient")
-public class Ingredient {
+@Table(name = "recipe_ingredient")
+public class RecipeIngredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -26,7 +26,7 @@ public class Ingredient {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "meal_id", nullable = false)
-    private Meal meal;
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
 
 }
