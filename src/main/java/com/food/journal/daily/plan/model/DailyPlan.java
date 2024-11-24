@@ -2,12 +2,14 @@ package com.food.journal.daily.plan.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @Entity
+@Setter
 @Table(name = "daily_plan")
 public class DailyPlan {
 

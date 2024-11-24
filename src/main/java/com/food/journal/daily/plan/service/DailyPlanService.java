@@ -5,12 +5,13 @@ import com.food.journal.daily.plan.api.DailyPlanDto;
 import com.food.journal.daily.plan.api.IngredientDto;
 import com.food.journal.daily.plan.api.MealDto;
 import com.food.journal.daily.plan.model.DailyPlan;
-import com.food.journal.daily.plan.model.MealIngredient;
 import com.food.journal.daily.plan.model.Meal;
+import com.food.journal.daily.plan.model.MealIngredient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +23,15 @@ public class DailyPlanService {
     private DailyPlanRepository dailyPlanRepository;
 
     public DailyPlanDto getPlan(LocalDate localDate) {
-        return toDto(dailyPlanRepository.findByDate(localDate));
+
+        DailyPlan byDate = dailyPlanRepository.findByDate(localDate);
+        if (byDate == null) {
+            byDate = new DailyPlan();
+            byDate.setDate(LocalDate.now());
+            byDate.setMeals(Collections.emptyList());
+            dailyPlanRepository.save(byDate);
+        }
+        return toDto(byDate);
     }
 
     private DailyPlanDto toDto(DailyPlan dailyPlan) {
