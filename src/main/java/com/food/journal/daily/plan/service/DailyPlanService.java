@@ -22,16 +22,21 @@ public class DailyPlanService {
 
     private DailyPlanRepository dailyPlanRepository;
 
-    public DailyPlanDto getPlan(LocalDate localDate) {
+    public DailyPlanDto getPlan(LocalDate localDate, String userId) {
+        DailyPlan byDate = getOrCreate(localDate, userId);
+        return toDto(byDate);
+    }
 
-        DailyPlan byDate = dailyPlanRepository.findByDate(localDate);
+    private DailyPlan getOrCreate(LocalDate localDate, String userId) {
+        DailyPlan byDate = dailyPlanRepository.findByDateAndUserId(localDate, userId);
         if (byDate == null) {
             byDate = new DailyPlan();
             byDate.setDate(LocalDate.now());
             byDate.setMeals(Collections.emptyList());
+            byDate.setUserId(userId);
             dailyPlanRepository.save(byDate);
         }
-        return toDto(byDate);
+        return byDate;
     }
 
     private DailyPlanDto toDto(DailyPlan dailyPlan) {

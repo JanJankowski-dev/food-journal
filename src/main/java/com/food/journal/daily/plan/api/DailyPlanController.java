@@ -14,13 +14,14 @@ public class DailyPlanController {
 
     private final DailyPlanService dailyPlanService;
     @GetMapping(path = "food-map")
-    public String getFoodMap(JwtAuthenticationToken token) {
+    public String getFoodMap() {
         return "food-map";
     }
 
     @GetMapping("{date}")
-    public DailyPlanDto getDailyPlan(@PathVariable LocalDate date){
-        return dailyPlanService.getPlan(date);
+    public DailyPlanDto getDailyPlan(@PathVariable LocalDate date, JwtAuthenticationToken token){
+        String userId = token.getToken().getClaimAsString("sub");
+        return dailyPlanService.getPlan(date, userId);
     }
 
     @PostMapping(path = "{id}/meal")

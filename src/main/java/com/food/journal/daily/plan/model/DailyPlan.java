@@ -11,12 +11,16 @@ import java.util.List;
 @Entity
 @Setter
 @Table(name = "daily_plan")
+
 public class DailyPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @Column(name="userId", nullable = false)
+    private String userId;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;

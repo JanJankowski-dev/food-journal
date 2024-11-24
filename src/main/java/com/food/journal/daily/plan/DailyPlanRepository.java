@@ -7,6 +7,6 @@ import java.time.LocalDate;
 
 public interface DailyPlanRepository extends JpaRepository<DailyPlan, Integer> {
 
-    DailyPlan findByDate(LocalDate date);
+    DailyPlan findByDateAndUserId(LocalDate date, String userId);
 
 }
