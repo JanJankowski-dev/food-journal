@@ -13,14 +13,11 @@ import java.time.LocalDate;
 public class DailyPlanController {
 
     private final DailyPlanService dailyPlanService;
-    @GetMapping(path = "food-map")
-    public String getFoodMap() {
-        return "food-map";
-    }
+    private final KeycloakUserService keycloakUserService;
 
     @GetMapping("{date}")
     public DailyPlanDto getDailyPlan(@PathVariable LocalDate date, JwtAuthenticationToken token){
-        String userId = token.getToken().getClaimAsString("sub");
+        String userId = keycloakUserService.getUserId(token);
         return dailyPlanService.getPlan(date, userId);
     }
 
